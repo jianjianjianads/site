@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.mapper.ProjectSiteMapper">
+    
+    <resultMap type="ProjectSite" id="ProjectSiteResult">
+        <result property="siteId"    column="site_id"    />
+        <result property="siteName"    column="site_name"    />
+        <result property="description"    column="description"    />
+        <result property="progress"    column="progress"    />
+        <result property="contractorId"    column="contractor_id"    />
+        <result property="manager"    column="manager"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="type"    column="type"    />
+        <result property="budget"    column="budget"    />
+        <result property="location"    column="location"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <association property="siteContractor" javaType="siteContractor"
+                     resultMap="com.ruoyi.project.mapper.SiteContractorMapper.SiteContractorResult"/>
+    </resultMap>
+
+    <sql id="selectProjectSiteVo">
+        select ps.*,sc.* from project_site ps left join site_contractor sc on ps.contractor_id = sc.contractor_id
+    </sql>
+
+    <select id="selectProjectSiteList" parameterType="ProjectSite" resultMap="ProjectSiteResult">
+        <include refid="selectProjectSiteVo"/>
+        <where>  
+            <if test="siteName != null  and siteName != ''"> and ps.site_name like concat('%', #{siteName}, '%')</if>
+            <if test="progress != null "> and ps.progress = #{progress}</if>
+            <if test="contractorId != null "> and ps.contractor_id = #{contractorId}</if>
+            <if test="siteContractor != null and siteContractor.contractorName != null and siteContractor.contractorName != ''">
+                and sc.contractor_name like concat('%', #{siteContractor.contractorName}, '%')</if>
+            <if test="manager != null "> and ps.manager = #{manager}</if>
+            <if test="type != null  and type != ''"> and ps.type = #{type}</if>
+            <if test="status != null  and status != ''"> and ps.status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectProjectSiteBySiteId" parameterType="Long" resultMap="ProjectSiteResult">
+        <include refid="selectProjectSiteVo"/>
+        where ps.site_id = #{siteId}
+    </select>
+<!--    3.23改-->
+    <select id="selectProjectSiteTypeList" parameterType="ProjectSite" resultType="com.ruoyi.project.domain.Result">
+        SELECT st.name AS name, COUNT(s.type) AS num
+        FROM site_type st
+                 LEFT JOIN project_site s ON st.id = s.type
+        GROUP BY st.name
+        HAVING COUNT(s.type) > 0
+    </select>
+    <select id="selectProjectSiteStatusList" parameterType="ProjectSite" resultType="com.ruoyi.project.domain.Result">
+        SELECT ss.name AS name, COUNT(ps.status) AS num
+        FROM site_status ss
+                 LEFT JOIN project_site ps ON ss.id = ps.status
+        GROUP BY ss.name
+        HAVING COUNT(ps.status) > 0
+    </select>
+    <select id="selectProjectSiteBudgetList" resultType="com.ruoyi.project.domain.Result">
+        SELECT name, num
+        FROM (
+        SELECT '100万以下' AS name,
+        SUM(CASE WHEN budget &lt; 1000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '100-500万' AS name,
+        SUM(CASE WHEN budget >= 1000000 AND budget &lt; 5000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '500-1000万' AS name,
+        SUM(CASE WHEN budget >= 5000000 AND budget &lt; 10000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '1000-5000万' AS name,
+        SUM(CASE WHEN budget >= 10000000 AND budget &lt; 50000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '5000万到一亿' AS name,
+        SUM(CASE WHEN budget >= 50000000 AND budget &lt; 100000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '一亿到五亿' AS name,
+        SUM(CASE WHEN budget >= 100000000 AND budget &lt; 500000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '五亿到十亿' AS name,
+        SUM(CASE WHEN budget >= 500000000 AND budget &lt; 1000000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        UNION ALL
+        SELECT '十亿以上' AS name,
+        SUM(CASE WHEN budget >= 1000000000 THEN 1 ELSE 0 END) AS num
+        FROM project_site
+        ) AS subquery
+        WHERE num > 0;
+    </select>
+    <select id="selectProjectSiteProgressList" parameterType="ProjectSite" resultMap="ProjectSiteResult">
+        SELECT *
+        FROM project_site
+        WHERE status != 1
+        ORDER BY progress DESC
+        LIMIT 5;
+    </select>
+    <select id="selectProjectSiteOptionList" resultType="com.ruoyi.project.domain.ProjectSite" resultMap="ProjectSiteResult">
+        SELECT *
+        FROM project_site
+    </select>
+
+    <insert id="insertProjectSite" parameterType="ProjectSite" useGeneratedKeys="true" keyProperty="siteId">
+        insert into project_site
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">site_name,</if>
+            <if test="description != null">description,</if>
+            <if test="progress != null">progress,</if>
+            <if test="contractorId != null">contractor_id,</if>
+            <if test="manager != null">manager,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="type != null">type,</if>
+            <if test="budget != null">budget,</if>
+            <if test="location != null">location,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">#{siteName},</if>
+            <if test="description != null">#{description},</if>
+            <if test="progress != null">#{progress},</if>
+            <if test="contractorId != null">#{contractorId},</if>
+            <if test="manager != null">#{manager},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="type != null">#{type},</if>
+            <if test="budget != null">#{budget},</if>
+            <if test="location != null">#{location},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProjectSite" parameterType="ProjectSite">
+        update project_site
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="siteName != null">site_name = #{siteName},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="contractorId != null">contractor_id = #{contractorId},</if>
+            <if test="manager != null">manager = #{manager},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="budget != null">budget = #{budget},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where site_id = #{siteId}
+    </update>
+
+    <delete id="deleteProjectSiteBySiteId" parameterType="Long">
+        delete from project_site where site_id = #{siteId}
+    </delete>
+
+    <delete id="deleteProjectSiteBySiteIds" parameterType="String">
+        delete from project_site where site_id in 
+        <foreach item="siteId" collection="array" open="(" separator="," close=")">
+            #{siteId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.mapper.ProjectTowerMapper">
+    
+    <resultMap type="ProjectTower" id="ProjectTowerResult">
+        <result property="towerId"    column="tower_id"    />
+        <result property="towerModel"    column="tower_model"    />
+        <result property="towerHeight"    column="tower_height"    />
+        <result property="maxLoad"    column="max_load"    />
+        <result property="jibAngle"    column="jib_angle"    />
+        <result property="moment"    column="moment"    />
+        <result property="windSpeed"    column="wind_speed"    />
+        <result property="tiltAngle"    column="tilt_angle"    />
+        <result property="cartLocation"    column="cart_location"    />
+        <result property="factoryId"    column="factory_id"    />
+        <result property="purchaseDate"    column="purchase_date"    />
+        <result property="operate"    column="operate"    />
+        <result property="siteId"    column="site_id"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <association property="towerFactory" javaType="towerFactory"
+                       resultMap="com.ruoyi.project.mapper.TowerFactoryMapper.TowerFactoryResult"/>
+        <association property="projectSite" javaType="projectSite"
+                     resultMap="com.ruoyi.project.mapper.ProjectSiteMapper.ProjectSiteResult"/>
+    </resultMap>
+
+    <sql id="selectProjectTowerVo">
+        select pt.*,tf.* ,ps.* from project_tower pt
+        left join tower_factory tf on pt.factory_id = tf.factory_id
+        left join project_site ps on pt.site_id = ps.site_id
+    </sql>
+
+    <select id="selectProjectTowerList" parameterType="ProjectTower" resultMap="ProjectTowerResult">
+        <include refid="selectProjectTowerVo"/>
+        <where>  
+            <if test="towerModel != null  and towerModel != ''"> and pt.tower_model = #{towerModel}</if>
+            <if test="towerHeight != null "> and pt.tower_height = #{towerHeight}</if>
+            <if test="maxLoad != null "> and pt.max_load = #{maxLoad}</if>
+            <if test="jibAngle != null "> and pt.jib_angle = #{jibAngle}</if>
+            <if test="moment != null "> and pt.moment = #{moment}</if>
+            <if test="windSpeed != null "> and pt.wind_speed = #{windSpeed}</if>
+            <if test="tiltAngle != null "> and pt.tilt_angle = #{tiltAngle}</if>
+            <if test="cartLocation != null  and cartLocation != ''"> and pt.cart_location = #{cartLocation}</if>
+            <if test="factoryId != null "> and pt.factory_id = #{factoryId}</if>
+            <if test="towerFactory != null and towerFactory.factoryName != null and towerFactory.factoryName != ''">
+                and tf.factory_name like concat('%', #{towerFactory.factoryName}, '%')</if>
+            <if test="operate != null  and operate != ''"> and pt.operate = #{operate}</if>
+            <if test="siteId != null  and siteId != ''"> and pt.site_id = #{siteId}</if>
+            <if test="projectSite != null and projectSite.siteName != null and projectSite.siteName != ''">
+                and ps.site_name like concat('%', #{projectSite.siteName}, '%')</if>
+            <if test="status != null  and status != ''"> and pt.status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectProjectTowerByTowerId" parameterType="Long" resultMap="ProjectTowerResult">
+        <include refid="selectProjectTowerVo"/>
+        where pt.tower_id = #{towerId}
+    </select>
+    <select id="selectProjectTowerBySiteId" parameterType="Long" resultMap="ProjectTowerResult">
+        select * from project_tower pt
+        where pt.site_id = #{siteId}
+    </select>
+    <select id="selectProjectTowerDistributionList" resultType="com.ruoyi.project.domain.Result">
+        SELECT ps.site_name AS name, COUNT(pt.site_id) AS num
+        FROM project_site ps
+                 LEFT JOIN project_tower pt ON ps.site_id = pt.site_id
+        GROUP BY ps.site_name
+        HAVING num> 0;
+    </select>
+
+    <select id="selectProjectTowerStatusList" resultType="com.ruoyi.project.domain.Result">
+        SELECT tt.name AS name, COUNT(pt.status) AS num
+        FROM towerstatus tt
+                 LEFT JOIN project_tower pt ON tt.id = pt.status
+        GROUP BY tt.name
+        HAVING COUNT(pt.status) > 0
+    </select>
+    <select id="selectProjectTowerContractorsList" resultType="com.ruoyi.project.domain.Result">
+        SELECT tf.factory_name AS name, COUNT(pt.factory_id) AS num
+        FROM tower_factory tf
+                 LEFT JOIN project_tower pt ON tf.factory_id = pt.factory_id
+        GROUP BY tf.factory_name
+        HAVING COUNT(pt.factory_id) > 0
+    </select>
+    <select id="selectProjectTowerOptionsList" resultType="com.ruoyi.project.domain.Option">
+        SELECT ps.site_name as siteName, pt.tower_id towerId
+        FROM project_site ps
+        JOIN project_tower pt ON ps.site_id = pt.site_id;
+    </select>
+
+
+    <insert id="insertProjectTower" parameterType="ProjectTower" useGeneratedKeys="true" keyProperty="towerId">
+        insert into project_tower
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="towerModel != null">tower_model,</if>
+            <if test="towerHeight != null">tower_height,</if>
+            <if test="maxLoad != null">max_load,</if>
+            <if test="jibAngle != null">jib_angle,</if>
+            <if test="moment != null">moment,</if>
+            <if test="windSpeed != null">wind_speed,</if>
+            <if test="tiltAngle != null">tilt_angle,</if>
+            <if test="cartLocation != null">cart_location,</if>
+            <if test="factoryId != null">factory_id,</if>
+            <if test="purchaseDate != null">purchase_date,</if>
+            <if test="operate != null">operate,</if>
+            <if test="siteId != null">site_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="towerModel != null">#{towerModel},</if>
+            <if test="towerHeight != null">#{towerHeight},</if>
+            <if test="maxLoad != null">#{maxLoad},</if>
+            <if test="jibAngle != null">#{jibAngle},</if>
+            <if test="moment != null">#{moment},</if>
+            <if test="windSpeed != null">#{windSpeed},</if>
+            <if test="tiltAngle != null">#{tiltAngle},</if>
+            <if test="cartLocation != null">#{cartLocation},</if>
+            <if test="factoryId != null">#{factoryId},</if>
+            <if test="purchaseDate != null">#{purchaseDate},</if>
+            <if test="operate != null">#{operate},</if>
+            <if test="siteId != null">#{siteId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProjectTower" parameterType="ProjectTower">
+        update project_tower
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="towerModel != null">tower_model = #{towerModel},</if>
+            <if test="towerHeight != null">tower_height = #{towerHeight},</if>
+            <if test="maxLoad != null">max_load = #{maxLoad},</if>
+            <if test="jibAngle != null">jib_angle = #{jibAngle},</if>
+            <if test="moment != null">moment = #{moment},</if>
+            <if test="windSpeed != null">wind_speed = #{windSpeed},</if>
+            <if test="tiltAngle != null">tilt_angle = #{tiltAngle},</if>
+            <if test="cartLocation != null">cart_location = #{cartLocation},</if>
+            <if test="factoryId != null">factory_id = #{factoryId},</if>
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="operate != null">operate = #{operate},</if>
+            <if test="siteId != null">site_id = #{siteId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where tower_id = #{towerId}
+    </update>
+
+    <delete id="deleteProjectTowerByTowerId" parameterType="Long">
+        delete from project_tower where tower_id = #{towerId}
+    </delete>
+
+    <delete id="deleteProjectTowerByTowerIds" parameterType="String">
+        delete from project_tower where tower_id in 
+        <foreach item="towerId" collection="array" open="(" separator="," close=")">
+            #{towerId}
+        </foreach>
+    </delete>
+</mapper>

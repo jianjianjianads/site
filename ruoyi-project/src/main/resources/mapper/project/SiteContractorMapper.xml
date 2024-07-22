@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.mapper.SiteContractorMapper">
+    
+    <resultMap type="SiteContractor" id="SiteContractorResult">
+        <result property="contractorId"    column="contractor_id"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="contractorCode"    column="contractor_code"    />
+        <result property="contact"    column="contact"    />
+        <result property="phone"    column="phone"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSiteContractorVo">
+        select contractor_id, contractor_name, contractor_code, contact, phone, keyword, status, create_by, create_time, update_by, update_time, remark from site_contractor
+    </sql>
+
+    <select id="selectSiteContractorList" parameterType="SiteContractor" resultMap="SiteContractorResult">
+        <include refid="selectSiteContractorVo"/>
+        <where>  
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectSiteContractorByContractorId" parameterType="Long" resultMap="SiteContractorResult">
+        <include refid="selectSiteContractorVo"/>
+        where contractor_id = #{contractorId}
+    </select>
+        
+    <insert id="insertSiteContractor" parameterType="SiteContractor" useGeneratedKeys="true" keyProperty="contractorId">
+        insert into site_contractor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="contractorCode != null">contractor_code,</if>
+            <if test="contact != null">contact,</if>
+            <if test="phone != null">phone,</if>
+            <if test="keyword != null">keyword,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="contractorCode != null">#{contractorCode},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="keyword != null">#{keyword},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSiteContractor" parameterType="SiteContractor">
+        update site_contractor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="contractorCode != null">contractor_code = #{contractorCode},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="keyword != null">keyword = #{keyword},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where contractor_id = #{contractorId}
+    </update>
+
+    <delete id="deleteSiteContractorByContractorId" parameterType="Long">
+        delete from site_contractor where contractor_id = #{contractorId}
+    </delete>
+
+    <delete id="deleteSiteContractorByContractorIds" parameterType="String">
+        delete from site_contractor where contractor_id in 
+        <foreach item="contractorId" collection="array" open="(" separator="," close=")">
+            #{contractorId}
+        </foreach>
+    </delete>
+</mapper>

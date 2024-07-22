@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.mapper.SiteWeatherMapper">
+    
+    <resultMap type="SiteWeather" id="SiteWeatherResult">
+        <result property="siteId"    column="site_id"    />
+        <result property="windSpeed"    column="wind_speed"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="pm25"    column="pm25"    />
+        <result property="pm10"    column="pm10"    />
+        <result property="noise"    column="noise"    />
+        <result property="humidity"    column="humidity"    />
+        <result property="weatherDate"    column="weather_date"    />
+    </resultMap>
+
+    <sql id="selectSiteWeatherVo">
+        select site_id, wind_speed, temperature, pm25, pm10, noise, humidity, weather_date from site_weather
+    </sql>
+
+    <select id="selectSiteWeatherList" parameterType="SiteWeather" resultMap="SiteWeatherResult">
+        <include refid="selectSiteWeatherVo"/>
+        <where>  
+            <if test="siteId != null "> and site_id = #{siteId}</if>
+            <if test="windSpeed != null "> and wind_speed = #{windSpeed}</if>
+            <if test="temperature != null "> and temperature = #{temperature}</if>
+            <if test="pm25 != null "> and pm25 &gt;= #{pm25}</if>
+            <if test="pm10 != null "> and pm10 &gt;= #{pm10}</if>
+            <if test="noise != null "> and noise &gt;= #{noise}</if>
+            <if test="humidity != null "> and humidity = #{humidity}</if>
+            <if test="weatherDate != null "> and weather_date = #{weatherDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectSiteWeatherBySiteId" parameterType="Long" resultMap="SiteWeatherResult">
+        <include refid="selectSiteWeatherVo"/>
+        where site_id = #{siteId}
+    </select>
+    <select id="selectToDaySiteWeatherBySiteId"  parameterType="Long" resultMap="SiteWeatherResult">
+        SELECT *
+        FROM site_weather
+        where site_id = #{siteId}
+          AND DATE(weather_date) = CURDATE();
+    </select>
+
+    <insert id="insertSiteWeather" parameterType="SiteWeather">
+        insert into site_weather
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="siteId != null">site_id,</if>
+            <if test="windSpeed != null">wind_speed,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="pm25 != null">pm25,</if>
+            <if test="pm10 != null">pm10,</if>
+            <if test="noise != null">noise,</if>
+            <if test="humidity != null">humidity,</if>
+            <if test="weatherDate != null">weather_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="siteId != null">#{siteId},</if>
+            <if test="windSpeed != null">#{windSpeed},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="pm25 != null">#{pm25},</if>
+            <if test="pm10 != null">#{pm10},</if>
+            <if test="noise != null">#{noise},</if>
+            <if test="humidity != null">#{humidity},</if>
+            <if test="weatherDate != null">#{weatherDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSiteWeather" parameterType="SiteWeather">
+        update site_weather
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="windSpeed != null">wind_speed = #{windSpeed},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="pm25 != null">pm25 = #{pm25},</if>
+            <if test="pm10 != null">pm10 = #{pm10},</if>
+            <if test="noise != null">noise = #{noise},</if>
+            <if test="humidity != null">humidity = #{humidity},</if>
+            <if test="weatherDate != null">weather_date = #{weatherDate},</if>
+        </trim>
+        where site_id = #{siteId}
+    </update>
+
+    <delete id="deleteSiteWeatherBySiteId" parameterType="Long">
+        delete from site_weather where site_id = #{siteId}
+    </delete>
+
+    <delete id="deleteSiteWeatherBySiteIds" parameterType="String">
+        delete from site_weather where site_id in 
+        <foreach item="siteId" collection="array" open="(" separator="," close=")">
+            #{siteId}
+        </foreach>
+    </delete>
+</mapper>

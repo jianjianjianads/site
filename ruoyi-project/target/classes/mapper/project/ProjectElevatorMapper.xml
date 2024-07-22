@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.mapper.ProjectElevatorMapper">
+    
+    <resultMap type="ProjectElevator" id="ProjectElevatorResult">
+        <result property="elevatorId"    column="elevator_id"    />
+        <result property="elevatorModel"    column="elevator_model"    />
+        <result property="elevatorSpeed"    column="elevator_speed"    />
+        <result property="maxLoad"    column="max_load"    />
+        <result property="factory_id"    column="factory_id"    />
+        <result property="purchaseDate"    column="purchase_date"    />
+        <result property="usageLog"    column="usage_log"    />
+        <result property="location"    column="location"    />
+        <result property="operate"    column="operate"    />
+        <result property="siteId"    column="site_id"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <association property="elevatorFactory" javaType="elevatorFactory"
+                     resultMap="com.ruoyi.project.mapper.ElevatorFactoryMapper.ElevatorFactoryResult"/>
+        <association property="projectSite" javaType="projectSite"
+                     resultMap="com.ruoyi.project.mapper.ProjectSiteMapper.ProjectSiteResult"/>
+    </resultMap>
+
+    <sql id="selectProjectElevatorVo">
+        select pe.* ,ef.* ,ps.* from project_elevator pe
+            left join elevator_factory ef on ef.factory_id = pe.factory_id
+            left join  bs.project_site ps on pe.site_id =ps.site_id
+    </sql>
+
+    <select id="selectProjectElevatorList" parameterType="ProjectElevator" resultMap="ProjectElevatorResult">
+        <include refid="selectProjectElevatorVo"/>
+        <where>  
+            <if test="elevatorId != null "> and pe.elevator_id = #{elevatorId}</if>
+            <if test="elevatorModel != null  and elevatorModel != ''"> and pe.elevator_model = #{elevatorModel}</if>
+            <if test="factory_id != null  and factory_id != ''"> and pe.factory_id = #{factory_id}</if>
+            <if test="elevatorFactory != null and elevatorFactory.factoryName != null and elevatorFactory.factoryName != ''">
+             and ef.factory_name like concat('%', #{elevatorFactory.factoryName}, '%')</if>
+            <if test="location != null  and location != ''"> and pe.location = #{location}</if>
+            <if test="siteId != null  and siteId != ''"> and pe.site_id = #{siteId}</if>
+            <if test="projectSite != null and projectSite.siteName != null and projectSite.siteName != ''">
+                and ps.site_name like concat('%', #{projectSite.siteName}, '%')</if>
+            <if test="status != null  and status != ''"> and pe.status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectProjectElevatorByElevatorId" parameterType="Long" resultMap="ProjectElevatorResult">
+        <include refid="selectProjectElevatorVo"/>
+        where pe.elevator_id = #{elevatorId}
+    </select>
+        
+    <insert id="insertProjectElevator" parameterType="ProjectElevator" useGeneratedKeys="true" keyProperty="elevatorId">
+        insert into project_elevator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="elevatorModel != null">elevator_model,</if>
+            <if test="elevatorSpeed != null">elevator_speed,</if>
+            <if test="maxLoad != null">max_load,</if>
+            <if test="factory_id != null">factory_id,</if>
+            <if test="purchaseDate != null">purchase_date,</if>
+            <if test="usageLog != null">usage_log,</if>
+            <if test="location != null">location,</if>
+            <if test="operate != null">operate,</if>
+            <if test="siteId != null">site_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="elevatorModel != null">#{elevatorModel},</if>
+            <if test="elevatorSpeed != null">#{elevatorSpeed},</if>
+            <if test="maxLoad != null">#{maxLoad},</if>
+            <if test="factory_id != null">#{factory_id},</if>
+            <if test="purchaseDate != null">#{purchaseDate},</if>
+            <if test="usageLog != null">#{usageLog},</if>
+            <if test="location != null">#{location},</if>
+            <if test="operate != null">#{operate},</if>
+            <if test="siteId != null">#{siteId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProjectElevator" parameterType="ProjectElevator">
+        update project_elevator
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="elevatorModel != null">elevator_model = #{elevatorModel},</if>
+            <if test="elevatorSpeed != null">elevator_speed = #{elevatorSpeed},</if>
+            <if test="maxLoad != null">max_load = #{maxLoad},</if>
+            <if test="factory_id != null">factory_id = #{factory_id},</if>
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="usageLog != null">usage_log = #{usageLog},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="operate != null">operate = #{operate},</if>
+            <if test="siteId != null">site_id = #{siteId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where elevator_id = #{elevatorId}
+    </update>
+
+    <delete id="deleteProjectElevatorByElevatorId" parameterType="Long">
+        delete from project_elevator where elevator_id = #{elevatorId}
+    </delete>
+
+    <delete id="deleteProjectElevatorByElevatorIds" parameterType="String">
+        delete from project_elevator where elevator_id in 
+        <foreach item="elevatorId" collection="array" open="(" separator="," close=")">
+            #{elevatorId}
+        </foreach>
+    </delete>
+</mapper>
