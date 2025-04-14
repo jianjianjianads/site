@@ -1,0 +1,154 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" version="26.2.12">
+  <diagram name="第 1 页" id="u9CfZd5uNaFkFMubaDs7">
+    <mxGraphModel>
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="后台处理" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="445" y="840" width="239" height="255" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="外部服务" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="135" y="840" width="201" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="数据层" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="8" y="1168" width="659" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="应用层" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="9" y="537" width="629" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Web 层" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="317" y="361" width="434" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="负载均衡" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="416" y="184" width="180" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="用户界面" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="446" y="8" width="383" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="用户" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="523" y="33" width="92" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="负载均衡器" style="rounded=1;arcSize=20;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="451" y="209" width="110" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="Web 服务器" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="434" y="386" width="143" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="应用服务器" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="321" y="562" width="140" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="数据库" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="144" y="1193" width="108" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="微服务" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="474" y="689" width="108" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="消息队列" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="508" y="865" width="124" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="第三方API" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="170" y="865" width="131" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="17" value="数据处理服务" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="492" y="1016" width="156" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="数据存储" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="508" y="1193" width="124" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="19" value="CDN" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="707" y="562" width="90" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="请求" style="curved=1;startArrow=none;endArrow=block;exitX=0.15;exitY=1;entryX=0.5;entryY=0.01;" edge="1" parent="1" source="9" target="10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="506" y="112" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="21" value="转发请求" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0;" edge="1" parent="1" source="10" target="11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="22" value="提供内容" style="curved=1;startArrow=none;endArrow=block;exitX=0.08;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="11" target="12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="391" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" value="数据库查询" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.76;entryX=0;entryY=0.08;" edge="1" parent="1" source="12" target="13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="73" y="652" />
+              <mxPoint x="73" y="1168" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="24" value="调用" style="curved=1;startArrow=none;endArrow=block;exitX=0.91;exitY=1;entryX=0.5;entryY=-0.01;" edge="1" parent="1" source="12" target="14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="528" y="652" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="25" value="返回数据" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.23;entryX=0.5;entryY=1;" edge="1" parent="1" source="13" target="12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="391" y="1168" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="26" value="读取或写入" style="curved=1;startArrow=none;endArrow=block;exitX=0.47;exitY=0.99;entryX=0.3;entryY=0;" edge="1" parent="1" source="14" target="15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="522" y="768" />
+              <mxPoint x="522" y="840" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" value="访问" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.67;entryX=0.5;entryY=0;" edge="1" parent="1" source="14" target="16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="235" y="768" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="28" value="异步处理" style="curved=1;startArrow=none;endArrow=block;exitX=0.7;exitY=0;entryX=0.93;entryY=0.99;" edge="1" parent="1" source="15" target="14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="618" y="840" />
+              <mxPoint x="618" y="768" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29" value="通知" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0.01;" edge="1" parent="1" source="15" target="17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30" value="解析数据" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1.01;entryX=0.5;entryY=0;" edge="1" parent="1" source="17" target="18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" value="静态内容" style="curved=1;startArrow=none;endArrow=block;exitX=1.01;exitY=0.88;entryX=0.13;entryY=0;" edge="1" parent="1" source="11" target="19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="688" y="465" />
+              <mxPoint x="688" y="537" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="32" value="用户访问" style="curved=1;startArrow=none;endArrow=block;exitX=0.65;exitY=0;entryX=1;entryY=0.71;" edge="1" parent="1" source="19" target="9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="778" y="537" />
+              <mxPoint x="778" y="112" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
