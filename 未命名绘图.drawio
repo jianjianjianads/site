@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" version="26.2.13">
   <diagram name="第 1 页" id="u9CfZd5uNaFkFMubaDs7">
-    <mxGraphModel dx="2660" dy="803" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3393" dy="1124" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -125,25 +125,11 @@
         <mxCell id="ddVlBPu1Q9asjV-bzZAw-73" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;消息管理&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="510" y="590" width="60" height="30" as="geometry" />
         </mxCell>
-        <object label="" id="ddVlBPu1Q9asjV-bzZAw-74">
-          <mxCell style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-            <mxGeometry x="190" y="650" width="120" height="50" as="geometry" />
-          </mxCell>
-        </object>
         <mxCell id="ddVlBPu1Q9asjV-bzZAw-75" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="340" y="650" width="120" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-76" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="480" y="650" width="120" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-77" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;课程审核&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="210" y="657.5" width="80" height="35" as="geometry" />
+          <mxGeometry x="190" y="650" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ddVlBPu1Q9asjV-bzZAw-78" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;公告管理&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="370" y="657.5" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-79" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;个人信息管理&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="510" y="660" width="60" height="30" as="geometry" />
+          <mxGeometry x="220" y="657.5" width="60" height="30" as="geometry" />
         </mxCell>
         <object label="" id="ddVlBPu1Q9asjV-bzZAw-81">
           <mxCell style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -170,20 +156,8 @@
             <mxGeometry x="193.75" y="895" width="120" height="50" as="geometry" />
           </mxCell>
         </object>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-88" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="343.75" y="895" width="120" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-89" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="483.75" y="895" width="120" height="50" as="geometry" />
-        </mxCell>
         <mxCell id="ddVlBPu1Q9asjV-bzZAw-90" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;课程审核&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="213.75" y="902.5" width="80" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-91" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;公告管理&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="373.75" y="902.5" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="ddVlBPu1Q9asjV-bzZAw-92" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;权限管理&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="513.75" y="905" width="60" height="30" as="geometry" />
         </mxCell>
         <object label="" id="ddVlBPu1Q9asjV-bzZAw-93">
           <mxCell style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
